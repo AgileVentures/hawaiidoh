@@ -167,10 +167,10 @@ def getfacility(request, object):
         f = Facility.objects.get(pk = p.facility_id)
     return f
 
-def getreport(request, type):
+def getreport(request, type, facility):
     p = Person.objects.get(pk = request.session['personpk'])
     if p.role_id == 1:
-        f = Facility.objects.get(pk = request.session['inputid'])
+        f = Facility.objects.get(pk = facility)
     else:
         f = Facility.objects.get(pk = p.facility_id)
     if type == 'update':
@@ -199,7 +199,7 @@ def getreport(request, type):
 def update12b(request, student_id):
     student = Student.objects.get(pk = student_id)
     f = getfacility(request, student)
-    report = getreport(request, 'update')
+    report = getreport(request, 'update', f.pk)
     f.compliant = False
     form = StudentForm12B(initial={
         'fname':student.fname,
@@ -314,7 +314,7 @@ def update12b(request, student_id):
 def update12a(request, student_id):
     student = Student.objects.get(pk = student_id)
     f = getfacility(request, student)
-    rep = getreport(request, 'update')
+    rep = getreport(request, 'update', f.pk)
     form = StudentForm12A(initial={
         'fname':student.fname,
         'mname':student.mname,
