@@ -40,7 +40,6 @@ class ModifyUser(forms.Form):
     fax = forms.IntegerField(max_value=99999999999, required=False, widget=forms.TextInput(attrs={'class' : 'form-control p30'}))
     title = forms.CharField(max_length=50, required=False, widget=forms.TextInput(attrs={'class' : 'form-control p30'}))
     user = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class' : 'form-control p30'}))
-    password = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class' : 'form-control p30'}))
     facility = forms.ModelChoiceField(Facility.objects.all().order_by('name'), required=False)
     role = forms.ModelChoiceField(Role.objects.all(), required=False)
     verify = forms.BooleanField(required=False)

@@ -208,6 +208,39 @@ def modifyfacility(request, facility_id):
         form = CreateFacility(initial={'name':facility.name,'street':facility.street,'zip':facility.zip, 'city':facility.city, 'has_pre_k':facility.has_pre_k,'is_only_pre_k':facility.is_only_pre_k,'phone':facility.phone, 'fax':facility.fax, 'email':facility.email, 'island':district.island, 'district':facility.district, 'lowest_grade':facility.lowest_grade, 'highest_grade':facility.highest_grade})
     return render(request, 'register/modifyfac.html', {'form':form,})
 
+def userform(form, role, type, person):
+    form = form
+    if form.is_valid():
+        p = person
+        u = User.objects.get(pk = person.email_id)
+        p.fname = form.cleaned_data['fname']
+        p.save()
+        p.mname = form.cleaned_data['mname']
+        p.save()
+        p.lname = form.cleaned_data['lname']
+        p.save()
+        p.phone = form.cleaned_data['phone']
+        p.save()
+        p.fax = form.cleaned_data['fax']
+        p.save()
+        p.title = form.cleaned_data['title']
+        p.save()
+        if role == 1:
+            p.role_id = form.cleaned_data['role']
+            p.save()
+            p.verified = form.cleaned_data['verify']
+            p.save()
+            p.facility_id = form.cleaned_data['facility']
+            p.save()
+        if type == 'reset':
+            u.password = 'password'
+            user = uauth.objects.get(username = p.email_id)
+            user.set_password(u.password)
+            user.save()
+        return 1
+    else:
+        return 0
+
 @login_required
 def modifyuser(request, person_id):
     person = Person.objects.get(pk = person_id)
@@ -223,33 +256,11 @@ def modifyuser(request, person_id):
             return HttpResponseRedirect(reverse('login:landingpage'))
         if 'Change' in request.POST:
             form = ModifyUser(request.POST)
-            if form.is_valid():
-                p = Person.objects.get(pk = person_id)
-                u = User.objects.get(pk = person.email_id)
-                u.password = form.cleaned_data['password']
-                u.save()
-                p.fname = form.cleaned_data['fname']
-                p.save()
-                p.mname = form.cleaned_data['mname']
-                p.save()
-                p.lname = form.cleaned_data['lname']
-                p.save()
-                p.phone = form.cleaned_data['phone']
-                p.save()
-                p.fax = form.cleaned_data['fax']
-                p.save()
-                p.title = form.cleaned_data['title']
-                p.save()
-                if request.session['role'] == 1:
-                    p.role_id = form.cleaned_data['role']
-                    p.save()
-                    p.verified = form.cleaned_data['verify']
-                    p.save()
-                    p.facility_id = form.cleaned_data['facility']
-                    p.save()
-                user = uauth.objects.get(username = p.email_id)
-                user.set_password(u.password)
-                user.save()
+            if userform(form, request.session['role'], 'change', person) == 1:
+                return HttpResponseRedirect(reverse('login:landingpage'))
+        if 'Reset' in request.POST:
+            form = ModifyUser(request.POST)
+            if userform(form, request.session['role'], 'reset', person) == 1:
                 return HttpResponseRedirect(reverse('login:landingpage'))
         if 'Drop' in request.POST:
             p = Person.objects.get(pk = person_id)
