@@ -1,0 +1,1 @@
+web: gunicorn hawaiidoh.wsgi --log-file -
