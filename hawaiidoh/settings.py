@@ -56,7 +56,7 @@ ROOT_URLCONF = 'hawaiidoh.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(PACKAGE_ROOT, 'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
