@@ -1,0 +1,47 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block content %}
+ <fieldset class="login">
+	<legend class="login">Create EPI12B</legend>
+        <form action="" method="post">
+        {% csrf_token %}
+            {% if f.lowest_grade_id == 2 %}
+            <div class="form-group">
+                <label>Kindergarten Enrollment:</label>
+                {{ form.kinder_enroll }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label>Lowest Grade</label>
+                {{ form.lowest_grade }}
+            </div>
+            <div class="form-group">
+                <label>Highest Grade</label>
+                {{ form.highest_grade }}
+            </div>
+            {% if f.lowest_grade_id <= 9 and f.highest_grade_id >= 9 %}
+                <div class="form_group">
+                <label>7th Grade Enrollment</label>
+                    {{ form.seventh_grade_enroll }}
+                </div>
+        {% endif %}
+            {% if f.lowest_grade_id == 2 %}
+            <div class="form-group">
+                <label>Total Enrollment Excluding K:</label>
+                {{ form.other_enroll }}
+            </div>
+            {% else %}
+                <div class="form-group">
+                <label>Total Enrollment:</label>
+                {{ form.other_enroll }}
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label>Amount of Students to Input:</label>
+                {{ form.students_to_input }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+     </fieldset>
+
+{% endblock %}

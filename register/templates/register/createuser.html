@@ -1,0 +1,45 @@
+{% extends 'login/otherbase.html' %}
+
+{% block content %}
+<fieldset class="login">
+    <legend class="login">Create User</legend>
+    <form action="" method="post">
+    {% csrf_token %}
+    <table align="center">
+        <tr>
+            <td>First Name:</td>
+            <td>{{ form.fname }}</td>
+        </tr>
+        <tr>
+            <td>Middle Name:</td>
+            <td>{{ form.mname }}</td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td>{{ form.lname }}</td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td>{{ form.phone }}</td>
+        </tr>
+        <tr>
+            <td>Fax:</td>
+            <td>{{ form.fax }}</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>{{ form.title }}</td>
+        </tr>
+        <tr>
+            <td>Facility:</td>
+            <td>{{ form.facility }}</td>
+        </tr>
+        <tr>
+            <td>Role:</td>
+            <td>{{ form.role }}</td>
+        </tr>
+    </table>
+    <input type="submit" name="submit" value="Return to Login" class="btn btn-primary">
+    </form>
+</fieldset>
+{% endblock %}

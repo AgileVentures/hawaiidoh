@@ -1,0 +1,11 @@
+{% extends 'login/base.html' %}
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+<h1 style="text-align: center">Confirm you want to remove {{ student }} from report</h1>
+    <div style="text-align: center">
+<button type="submit" class="btn btn-primary btn-lg" name="confirm">Yes</button>
+<button type="submit" class="btn btn-primary btn-lg" name="mistake">No</button>
+</div>
+</form>
+{% endblock %}

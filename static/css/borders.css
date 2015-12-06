@@ -1,0 +1,45 @@
+.top3{
+    border-top-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+}
+
+.left{
+    border-left-style: solid;
+}
+
+.right{
+    border-right-style: solid;
+}
+
+.bottom{
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.bottom3{
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+}
+
+.bottomleft{
+    border-bottom-style: solid;
+    border-left-style: solid;
+}
+
+.bottomright{
+    border-bottom-style: solid;
+    border-right-style: solid;
+}
+
+.all{
+    border: solid;
+    text-align: center;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;;
+}

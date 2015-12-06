@@ -1,0 +1,31 @@
+{% extends 'login/base.html' %}
+{% block content %}
+    <form action="" method="post">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Student Id: </td>
+            <td>{{ form.id }}</td>
+            <td><button type="submit" class="btn btn-primary" name="search">Search</button></td>
+        </tr>
+    </table>
+    {% if s %}
+        <table width="100%">
+        <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Grade</th>
+        </tr>
+
+        <tr>
+            <td><a href="{% url 'reportviewing:importstudent' s.id %}"> {{ s.id }}</a></td>
+            <td>{{ s }}</td>
+            <td>{{ s.enrollment }}</td>
+        </tr>
+
+        </table>
+    {% else %}
+        <p>No Student Found</p>
+    {% endif %}
+    </form>
+{% endblock %}

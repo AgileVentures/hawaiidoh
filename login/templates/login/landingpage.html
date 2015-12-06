@@ -1,0 +1,8 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+{% block header %}
+    <p align="center" >Welcome {{ p }}</p>
+{% endblock %}
+{% block content %}
+<img src="{% static "login/smiling_child.jpg" %}" style="width: 60%">
+{% endblock %}

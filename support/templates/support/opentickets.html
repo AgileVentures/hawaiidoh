@@ -1,0 +1,47 @@
+{% extends 'login/base.html' %}
+{% block content %}
+ <fieldset class="login">
+    <legend class="login">Support Requests
+    {% csrf_token %}
+    {% if request.session.role != 1 %}
+        <a href="{% url 'support:create'%}" class="btn btn-primary">Create New Request</a>
+    {% endif %}
+    </legend>
+    {% if tickets %}
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Request Id</th>
+                <th>Person</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for ticket in tickets %}
+                    {% csrf_token %}
+                        <tr>
+                            <td>{{ ticket.id }}</td>
+                            <td>{{ ticket.person }}</td>
+                            <td>{{ ticket.description }}</td>
+                            <td>{{ ticket.status }}</td>
+                            {% if ticket.status_id != 3 %}
+                                <td>
+                            {% if request.session.role == 1 %}
+                                {% if ticket.status_id != 2 %}
+                                <a href="{% url 'support:update' ticket.id %}" class="btn btn-primary">Accept</a>
+                            {% endif %}
+                            {% endif %}
+                                <a href="{% url 'support:close' ticket.id %}" class="btn btn-primary">Close</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No open tickets</p>
+    {% endif %}
+</fieldset>
+{% endblock %} }}

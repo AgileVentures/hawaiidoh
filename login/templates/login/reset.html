@@ -1,0 +1,11 @@
+{% extends 'login/otherbase.html' %}
+{% block content %}
+<fieldset class="login">
+    <legend class="login">Reset Password</legend>
+    <form action="" method="post">
+    {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+    </form>
+</fieldset>
+{% endblock %}

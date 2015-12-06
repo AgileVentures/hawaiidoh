@@ -1,0 +1,76 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'css/borders.css' %}" rel="stylesheet" media="screen">
+	<link href="{% static 'css/depthealth.css' %}" rel="stylesheet" media="screen">
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+	  <div class="navbar-header">
+	    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	      <span class="icon-bar"></span>
+	    </button>
+	  </div>
+
+	  <a class="navbar-brand" href="#">&nbsp;</a>
+
+	  <div class="navbar-collapse collapse">
+	    <img src="{% static "login/header.gif" %}" alt="Header" />
+	    <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'reportviewing:epi12apdf' %}">EPI12A PDF</a></li>
+            <li><a href="{% url 'reportviewing:epi12bpdf' %}">EPI12B PDF</a></li>
+	        <li><a href="{% url 'faq:category' %}">FAQ</a></li>
+	        <li><a href="{% url 'login:logout' %}">Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+    {% block header %}
+    {% endblock %}
+    <nav class="collapse navbar-inverse navbar-collapse bs-navbar-collapse" role="navigation">
+      <div class="container">
+        {% csrf_token %}
+
+          <ul class="nav navbar-nav">
+          {% if request.session.role == 1 %}
+            <li><a href="{% url 'register:facilitylist' %}">Manage Facility</a></li>
+            {% endif %}
+              {% if request.session.role == 2 %}
+                  <li><a href="{% url 'register:facilitylanding' request.session.fac %}">Manage Facility</a></li>
+              {% endif %}
+          {% if request.session.role == 1 or request.session.role == 2%}
+              <li><a href="{% url 'register:userlist' %}">Manage User's</a></li>
+          {% endif %}
+            {% if request.session.hasprek == 1 and request.session.role != 1 %}
+             <li><a href="{% url 'reportinput:landing12a' %}">Create EPI12A</a></li>
+            {% endif %}
+            {% if request.session.onlyprk == 0 and request.session.role != 1 %}
+                <li><a href="{% url 'reportinput:landing12b' %}">Create EPI12B</a></li>
+            {% endif %}
+            {% if request.session.role != 1 %}
+                <li><a href="{% url 'reportviewing:date' %}">View Reports</a></li>
+            {% endif %}
+            {% csrf_token %}
+              <li><a href="{% url 'support:open' %}">Support Request</a></li>
+            <li><a href="{% url 'reportviewing:studentfilter' %}">Student List</a> </li>
+          <li><a href="{% url 'login:landingpage' %}">Home</a> </li>
+        </ul>
+      </div>
+    </nav>
+
+	<div class="container">
+    {% block content %}
+    {% endblock %}
+	</div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2015 State of Hawaii Department of Health Developed by: Hawai'i Pacific University
+Version 1.0 Build 2015</p>
+      </div>
+    </footer>
+</body>
+</html>

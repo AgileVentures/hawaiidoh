@@ -1,0 +1,70 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+ <fieldset class="login">
+    <legend class="login">Modify User</legend>
+    <form action="" method="post">
+        {% csrf_token %}
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="fname">First Name:</label>
+               {{ form.fname }}
+            </div>
+            <div class="form-group">
+                <label for="mname">Middle Name:</label>
+               {{ form.mname }}
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <img src="{% static "login/vax_to_school.jpg" %}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="lname">Last Name:</label>
+       {{ form.lname }}
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+       {{ form.phone }}
+    </div>
+    <div class="form-group">
+        <label for="fax">Fax:</label>
+       {{ form.fax }}
+    </div>
+    <div class="form-group">
+        <label for="title">Title:</label>
+       {{ form.title }}
+    </div>
+    <div class="form-group">
+        <label for="user">User:</label>
+       {{ form.user }}
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+       {{ form.password }}
+    </div>
+    {% if request.session.role == 1 %}
+    <div class="form-group">
+        <label for="facility">Facility:</label>
+       {{ form.facility }}
+    </div>
+    <div class="form-group">
+        <label for="role">Role</label>
+       {{ form.role }}
+    </div>
+    <div class="form-group">
+        <label for="verify">Verify:</label>
+       {{ form.verify }}
+    </div>
+    {% endif %}
+        <button class="btn btn-primary" type="submit" name="Change">Change</button>
+        {% if request.session.role == 1 %}
+        <button class="btn btn-primary" type="submit" name="Delete">Delete</button>
+        {% else %}
+        <button class="btn btn-primary" type="submit" name="Drop">Remove User</button>
+        {% endif %}
+    </form>
+</fieldset>
+{% endblock %}

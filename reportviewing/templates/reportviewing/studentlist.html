@@ -1,0 +1,54 @@
+{% extends 'login/base.html' %}
+{% block content %}
+   <h3>Students</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Last Name: {{ form.lname }}</td>
+                <td><input type="submit" name="submit" value="Filter" class="btn btn-primary"></td>
+                {% if request.session.role != 1 %}
+                <td><input type="submit" name="remove" value="Remove Highest Grade" class="btn btn-primary"></td>
+                <td><input type="submit" name="import" value="Import Students" class="btn btn-primary"></td>
+                {% endif %}
+            </tr>
+        </table>
+    </form>
+    <br />
+{% if students %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="text-align: center">Name</th>
+            {% if request.session.role == 1 %}
+            <th style="text-align: center">Facility</th>
+            {% endif %}
+            <th style="text-align: center">Notes</th>
+        </tr>
+        </thead>
+        {% for student in students %}
+        <tr>
+            {% if student.enrollment_id > 1 %}
+                    <td style="text-align: center"><a href="{% url 'reportinput:update12b'  student.id%}">{{ student }}</a></td>
+            {% elif student.enrollment_id == 1 %}
+                    <td style="text-align: center"><a href="{% url 'reportinput:update12a' student.id %}">{{ student }}</a></td>
+            {% endif %}
+            {% if request.session.role == 1 %}
+            <td style="text-align: center">{{ student.facility }}</td>
+            {% endif %}
+            <td style="text-align: center">{{ student.notes }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <ul class="pager">
+
+            {% if students.has_previous %}
+                <li class="previous"><a href="?page={{ students.previous_page_number }}">Previous</a></li>
+            {% endif %}
+    {% if students.has_next %}
+               <li class="next"> <a href="?page={{ students.next_page_number }}">Next</a></li>
+            {% endif %}
+            {% else %}
+        <h3>No students found</h3>
+    {% endif %}
+{% endblock %}

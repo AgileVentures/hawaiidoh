@@ -1,0 +1,93 @@
+{% extends 'login/base.html' %}
+{% block content %}
+<fieldset class="login">
+    <legend style="text-align: center;">{{ f.name }}</legend>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th>City</th>
+            <th>Zip</th>
+            <th>Island</th>
+            <th>District</th>
+            <th>Phone</th>
+            <th>Fax</th>
+            <th>Principal/Director</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ f.street }}</td>
+            <td>{{ f.city }}</td>
+            <td>{{ f.zip }}</td>
+            <td>{{ d.island }}</td>
+            <td>{{ f.district }}</td>
+            <td>{{ f.phone }}</td>
+            <td>{{ f.fax }}</td>
+            <td>{{ p }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    {% if f.is_only_pre_k != True %}
+    <table class="table table-striped">
+        <tr>
+            <th>Lowest Grade</th>
+            <th>Highest Grade</th>
+            {% if f.lowest_grade_id == 2 %}
+                <th>Kindergarten Enrollment</th>
+            {% endif %}
+            {% if f.lowest_grade_id <= 9 and f.highest_grade_id >= 9  %}
+                <th>7th Grade Enrollment</th>
+                {% endif %}
+            <th>Total Enrollment</th>
+        </tr>
+        <tr>
+            <td>{{ f.lowest_grade }}</td>
+            <td>{{ f.highest_grade }}</td>
+            {% if f.lowest_grade_id == 2 %}
+                <td>{{ f.kinder_enroll }}</td>
+            {% endif %}
+            {% if f.lowest_grade_id <= 9 and f.highest_grade_id >= 9  %}
+                <td>{{ f.seventh_grade_enroll }}</td>
+                {% endif %}
+            <td>{{ f.total_enrolled }}</td>
+        </tr>
+    </table>
+    {% endif %}
+
+    {% if f.has_pre_k %}
+        <table class="table table-striped">
+            <tr>
+                <th>Under 19 Months</th>
+                <th>19 Months and Over</th>
+                <th>Total in Pre-K</th>
+            </tr>
+            <tr>
+                <td>{{ f.under_19_months }}</td>
+                <td>{{ f.over_19_months }}</td>
+                <td>{{ f.total_prek }}</td>
+            </tr>
+        </table>
+    {% endif %}
+
+    <form action="" method="post">
+    <table width="100%">
+                {% csrf_token %}
+        <tr>
+            <td align="center"><a href="{% url 'register:modify' f.id%}" class="btn btn-primary" role="button">Modify Facility Information</a></td>
+                {% if f.has_pre_k %}
+                <td align="center"><button class="btn btn-primary" type="submit" name="12a">Create PreK Report</button></td>
+                 {% endif %}
+                {% if not f.is_only_pre_k %}
+                <td align="center"><button class="btn btn-primary" type="submit" name="12b">Create Grade School Report</button></td>
+                {% endif %}
+                <td><button class="btn btn-primary" type="submit" name="Med">Medical Exemptions</button></td>
+                <td><button class="btn btn-primary" type="submit" name="Rel">Religious Exemptions</button></td>
+                <td><button class="btn btn-primary" type="submit" name="Ex">Exemptions</button></td>
+                <td><button class="btn btn-primary" type="submit" name="All">All Students</button></td>
+            <tr>
+        </tr>
+    </table>
+    </form>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'login/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<fieldset class="login">
+    <legend class="login">Modify Facility</legend>
+    <form action="" method="post">
+        {% csrf_token %}
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="form-group">
+                <label for="name">Name:</label>
+               {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="street">Street:</label>
+               {{ form.street }}
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <img src="{% static "login/vax_to_school.jpg" %}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="zip">Zip:</label>
+       {{ form.zip }}
+    </div>
+    <div class="form-group">
+        <label for="city">City:</label>
+       {{ form.city }}
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone:</label>
+       {{ form.phone }}
+    </div>
+    <div class="form-group">
+        <label for="fax">Fax:</label>
+       {{ form.fax }}
+    </div>
+    <div class="form-group">
+        <label for="email">E-Mail:</label>
+       {{ form.email }}
+    </div>
+    <div class="form-group">
+        <label for="has_pre_k">Has pre k:</label>
+       {{ form.has_pre_k }}
+    </div>
+    <div class="form-group">
+        <label for="is_only_pre_k">Is only pre k:</label>
+       {{ form.is_only_pre_k }}
+    </div>
+    <div class="form-group">
+        <label for="island">Island:</label>
+       {{ form.island }}
+    </div>
+    <div class="form-group">
+        <label for="district">District:</label>
+       {{ form.district }}
+    </div>
+    <div class="form-group">
+        <label for="lowest_grade">Lowest Grade:</label>
+       {{ form.lowest_grade }}
+    </div>
+    <div class="form-group">
+        <label for="highest_grade">Highest Grade:</label>
+       {{ form.highest_grade }}
+    </div>
+        <button class="btn btn-primary" type="submit" name="Change">Change</button>
+        {% if request.session.role == 1 %}
+        <button class="btn btn-primary" type="submit" name="Delete">Delete</button>
+        {% endif %}
+    </form>
+</fieldset>
+{% endblock %}

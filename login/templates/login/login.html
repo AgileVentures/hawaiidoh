@@ -1,0 +1,22 @@
+{% extends "login/loginbase.html" %}
+
+{% block content %}
+    <div class="alert alert-info" role="alert">
+		Welcome to the Hawaii State Department of Health online immunization reporting system.
+		Please select your school/facility and password. Selecting a district will return only those schools/facilities belonging to that district.
+		This may help you find your school/facility.
+		<strong>If you don't see your school or facility listed below</strong>, please contact the Immunization Branch at <strong>586-8300</strong> for technical assistance.
+	</div>
+<fieldset class="login">
+    <legend class="login">Login</legend>
+    <form action = "/login/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" class="btn btn-primary">
+    </form>
+</fieldset>
+    <a href="{% url 'register:user' %}">Create User</a>
+    |
+    <a href="{% url 'login:reset' %}">Reset Password</a>
+    </table>
+{% endblock %}

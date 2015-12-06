@@ -1,0 +1,104 @@
+{% extends 'login/base.html' %}
+
+{% block content %}
+    <h1 style="text-align: center">EPI12B</h1>
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {{ formset.non_form_errors.as_ul }}
+    <table id ="formset" class="form">
+    {% for form in formset.forms %}
+        <table class="bottom">
+        <table width="100%">
+        <tr bgcolor="#deb887">
+            <td class="all">First Name</td>
+            <td class="all">Middle Name</td>
+            <td class="all">Last Name</td>
+            <td class="all">Date of Birth</td>
+            <td class="all">Grade</td>
+            <td class="all">Entry Date</td>
+        </tr>
+        <tr>
+            <td class="all">{{ form.fname }}</td>
+            <td class="all">{{ form.mname }}</td>
+            <td class="all">{{ form.lname }}</td>
+            <td class="all">{{ form.dateofbirth }}</td>
+            <td class="all">{{ form.grade }}</td>
+            <td class="all">{{ form.entrydate }}</td>
+        </tr>
+        </table>
+        <table cellspacing="5" cellpadding="5" width="100%">
+        <tr bgcolor="#fff8dc">
+            <td class="top3" style="text-align: center">No Immunization</td>
+            <td colspan="2" class="all">Exempt</td>
+            <td colspan="5" class="all">DTaP/DTP/DT</td>
+            <td colspan="4" class="all">Polio</td>
+            <td colspan="3" class="all">Hepatitis B</td>
+            <td class="all" colspan="2">MMR</td>
+            <td class="all" colspan="2">Varicella</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr bgcolor="#fff8dc">
+            <td style="text-align: center" class="bottom3">Record</td>
+            <td class="all">Religious</td>
+            <td class="all">Medical</td>
+            <td class="all">1</td>
+            <td class="all">2</td>
+            <td class="all">3</td>
+            <td class="all">4</td>
+            <td class="all">5</td>
+            <td class="all">1</td>
+            <td class="all">2</td>
+            <td class="all">3</td>
+            <td class="all">4</td>
+            <td class="all">1</td>
+            <td class="all">2</td>
+            <td class="all">3</td>
+            <td class="all">1</td>
+            <td class="all">2</td>
+            <td class="all">1</td>
+            <td class="all">2</td>
+            <td class="all">PE</td>
+            <td class="all">TB</td>
+        </tr>
+        <tr>
+            <td class="all">{{ form.noshotrecord }}</td>
+            <td class="all">{{ form.exempt_rel }}</td>
+            <td class="all">{{ form.exempt_med }}</td>
+            <td class="all">{{ form.dtap1 }}</td>
+            <td class="all">{{ form.dtap2 }}</td>
+            <td class="all">{{ form.dtap3 }}</td>
+            <td class="all">{{ form.dtap4 }}</td>
+            <td class="all">{{ form.dtap5 }}</td>
+            <td class="all">{{ form.polio1 }}</td>
+            <td class="all">{{ form.polio2 }}</td>
+            <td class="all">{{ form.polio3 }}</td>
+            <td class="all">{{ form.polio4 }}</td>
+            <td class="all">{{ form.hepb1 }}</td>
+            <td class="all">{{ form.hepb2 }}</td>
+            <td class="all">{{ form.hepb3 }}</td>
+            <td class="all">{{ form.mmr1 }}</td>
+            <td class="all">{{ form.mmr2 }}</td>
+            <td class="all">{{ form.varicella1 }}</td>
+            <td class="all">{{ form.varicella2 }}</td>
+            <td class="all">{{ form.pe }}</td>
+            <td class="all">{{ form.tb }}</td>
+        </tr>
+        </table>
+        <table width="100%">
+        <tr bgcolor="#f0f8ff">
+            <td class="all">Notes</td>
+        </tr>
+        <tr>
+             <td><textarea class="form-control" rows="1" id="id_notes" name="notes"></textarea></td>
+        </tr>
+        </table>
+        </table>
+    {% endfor %}
+    </table>
+    <input type="submit" value="Submit" class="btn btn-primary">
+
+    </form>
+{% endblock %}
