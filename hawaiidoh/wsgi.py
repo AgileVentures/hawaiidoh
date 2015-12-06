@@ -10,15 +10,12 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-<<<<<<< HEAD
+
 from dj_static import Cling
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hawaiidoh.settings")
 
 application = Cling(get_wsgi_application())
-=======
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hawaiidoh.settings")
 
-application = get_wsgi_application()
->>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
+
