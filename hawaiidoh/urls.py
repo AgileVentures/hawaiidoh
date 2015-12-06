@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 """depthealth URL Configuration
+=======
+"""hawaiidoh URL Configuration
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -17,11 +21,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+<<<<<<< HEAD
     url(r'^faq/', include('faq.urls', namespace="faq")),
     url(r'^support/', include('support.urls', namespace="support")),
     url(r'^reportviewing/', include('reportviewing.urls', namespace="reportviewing")),
     url(r'^reportinput/', include('reportinput.urls', namespace="reportinput")),
     url(r'^register/', include('register.urls', namespace="register")),
     url(r'^login/', include('login.urls', namespace="login")),
+=======
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
     url(r'^admin/', include(admin.site.urls)),
 ]

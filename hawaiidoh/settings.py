@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+<<<<<<< HEAD
 import dj_database_url
 
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -19,6 +20,12 @@ PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_URL = 'login:login'
+=======
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -26,9 +33,15 @@ LOGIN_URL = 'login:login'
 SECRET_KEY = '@a(vsh)r4$kg1p3=x%c4%%@dceg=-rh^xheex*ut8hix)3rhlr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
+=======
+DEBUG = True
+
+ALLOWED_HOSTS = []
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
 
 
 # Application definition
@@ -40,12 +53,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'login',
     'faq',
     'register',
     'reportinput',
     'reportviewing',
     'support'
+=======
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,7 +80,11 @@ ROOT_URLCONF = 'hawaiidoh.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
         'DIRS': [os.path.join(PACKAGE_ROOT, 'template')],
+=======
+        'DIRS': [],
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +110,10 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 DATABASES['default'] = dj_database_url.config()
+=======
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -110,6 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
@@ -117,3 +141,5 @@ STATICFILES_DIRS = (
 )
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+=======
+>>>>>>> c4bd8a9493627404008ed75e3a0a03858bb1d5bd
