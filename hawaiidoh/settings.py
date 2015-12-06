@@ -14,9 +14,11 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 import os
 import dj_database_url
 
+PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+LOGIN_URL = 'login:login'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -24,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '@a(vsh)r4$kg1p3=x%c4%%@dceg=-rh^xheex*ut8hix)3rhlr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -38,6 +40,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'login',
+    'faq',
+    'register',
+    'reportinput',
+    'reportviewing',
+    'support'
 )
 
 MIDDLEWARE_CLASSES = (
