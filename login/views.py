@@ -11,9 +11,7 @@ from register.views import passwordcheck
 # Create your views here.
 
 def loginscreen(request):
-
     if request.method == 'POST':
-        fac = Facility.objects.all()
         form = Login(request.POST)
         if form.is_valid():
             try:
