@@ -37,6 +37,8 @@ I highly recommend creating your own user, then following the instructions above
 From there, have fun :)
 
 
+If working in a local environment, keep DEBUG = True. If you plan to push to Heroku, and AWS instance may be necessary
+
 Note: During development, the settings.py file will be changed quite often. When running locally, set DEBUG = True
 
 Also, the following line needs to be commented out
