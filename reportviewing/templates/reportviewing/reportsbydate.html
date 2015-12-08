@@ -1,9 +1,6 @@
 {% extends 'login/base.html' %}
 {% block content %}
-    {% if reports %}
-    {% csrf_token %}
-    <h3>Reports</h3>
-    {% if request.session.role == 1 %}
+{% if request.session.role == 1 %}
         <form action="" method="post">
             {% csrf_token %}
             {% if not facility.compliant %}
@@ -13,6 +10,9 @@
             {% endif %}
         </form>
     {% endif %}
+    {% if reports %}
+    {% csrf_token %}
+    <h3>Reports</h3>
     <ul>
     {% for report in reports %}
         <li>
