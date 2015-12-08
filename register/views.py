@@ -83,8 +83,6 @@ form.cleaned_data['island']).pk
 
     return render(request,'register/facility_list.html',{'form':form, 'object_list':fac})
 
-
-
 def username(request):
     if request.method == 'POST':
         form = Username(request.POST)
@@ -101,7 +99,6 @@ def username(request):
     else:
         form = Username()
     return render(request, 'register/user.html',{'form':form,})
-
 
 def createuser(request):
     u = request.session['user']
@@ -234,6 +231,7 @@ def userform(form, role, type, person):
             p.save()
         if type == 'reset':
             u.password = 'password'
+            u.save()
             user = uauth.objects.get(username = p.email_id)
             user.set_password(u.password)
             user.save()
