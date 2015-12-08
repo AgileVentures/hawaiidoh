@@ -56,4 +56,4 @@ class Report(models.Model):
         db_table = 'report'
 
     def __str__(self):
-        return '{} id: {}'.format(str(self.entrydate), str(self.id))
+        return '{} date: {} id: {}'.format(self.facility, str(self.entrydate), self.id)
