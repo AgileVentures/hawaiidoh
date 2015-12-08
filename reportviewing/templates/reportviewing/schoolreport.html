@@ -126,7 +126,7 @@
         </table>
         <br />
     <input type="submit" value="Create CSV" class="btn btn-info">
-        {% if request.session.role == 2 and not report.complete %}
+        {% if facility.canupdate and not report.complete %}
     <input type="submit" value="Confirm" class="btn btn-info" name="confirm">
             {% endif %}
     </form>

@@ -75,6 +75,7 @@ class Facility(models.Model):
     allimmune = models.BooleanField(default=0)
     count = models.IntegerField(default=0)
     compliant = models.BooleanField(default=0)
+    canupdate = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'facility'

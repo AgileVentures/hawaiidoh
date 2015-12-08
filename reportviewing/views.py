@@ -12,6 +12,23 @@ import datetime
 import csv
 # Create your views here.
 
+def change_user_input_status(type):
+    facilities = Facility.objects.exclude(pk = 1)
+    doh = Facility.objects.get(pk = 1)
+    for facility in facilities:
+        if type == 'disable':
+            facility.canupdate = False
+        else:
+            facility.canupdate = True
+        facility.save()
+    if type == 'disable':
+        doh.compliant = True
+    else:
+        doh.compliant = False
+    doh.save()
+
+
+
 @login_required
 def removefromreport(request, student_id):
     student = Student.objects.get(pk = student_id)
@@ -27,11 +44,23 @@ def removefromreport(request, student_id):
 @login_required
 def reportsbydate(request):
     p = Person.objects.get(pk = request.session['personpk'])
-    try:
-        r = Report.objects.filter(facility_id=p.facility_id)
-    except (Report.DoesNotExist):
-        return render(request, 'reportviewing/reportsbydate.html',{'error_message': "No reports for this facility",})
-    return render(request,'reportviewing/reportsbydate.html',{'reports':r,})
+    f = Facility.objects.get(pk = p.facility_id)
+    if p.role_id == 1:
+        try:
+            r = Report.objects.all()
+        except Report.DoesNotExist:
+            return render(request, 'reportviewing/reportsbydate.html',{'error_message': "No reports for this facility",})
+    else:
+        try:
+            r = Report.objects.filter(facility_id=p.facility_id)
+        except (Report.DoesNotExist):
+            return render(request, 'reportviewing/reportsbydate.html',{'error_message': "No reports for this facility",})
+    if request.method == 'POST':
+        if 'disable' in request.POST:
+            change_user_input_status('disable')
+        else:
+            change_user_input_status('enable')
+    return render(request,'reportviewing/reportsbydate.html',{'reports':r, 'facility':f})
 
 @login_required
 def schoolreport(request, report_id):
@@ -45,6 +74,7 @@ def schoolreport(request, report_id):
             if 'confirm' in request.POST:
                 r.complete = True
                 r.save()
+                f = Facility.objects.get(pk = r.facility_id)
                 f.compliant = True
                 f.save()
                 return HttpResponseRedirect(reverse('login:landingpage'))
@@ -53,7 +83,7 @@ def schoolreport(request, report_id):
                     return HttpResponseRedirect(reverse('reportviewing:csva', args=(r.pk,)))
                 else:
                     return HttpResponseRedirect(reverse('reportviewing:csvb', args=(r.pk,)))
-    return render(request, 'reportviewing/schoolreport.html', {'students':s, 'report':r})
+    return render(request, 'reportviewing/schoolreport.html', {'students':s, 'report':r, 'facility':f})
 
 @login_required
 def createschoolcsva(request, report_id):

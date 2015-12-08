@@ -50,9 +50,9 @@
             {% if request.session.onlyprk == 0 and request.session.role != 1 %}
                 <li><a href="{% url 'reportinput:landing12b' %}">Create EPI12B</a></li>
             {% endif %}
-            {% if request.session.role != 1 %}
+
                 <li><a href="{% url 'reportviewing:date' %}">View Reports</a></li>
-            {% endif %}
+
             {% csrf_token %}
               <li><a href="{% url 'support:open' %}">Support Request</a></li>
             <li><a href="{% url 'reportviewing:studentfilter' %}">Student List</a> </li>

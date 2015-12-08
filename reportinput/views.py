@@ -3,7 +3,6 @@ from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db.models import Count
 from .models import Student, Report
 from register.models import Person, Facility, Enrollment
 from .forms import StudentForm12A, StudentForm12B, SchoolInfo, PreKInfo
@@ -167,10 +166,10 @@ def getfacility(request, object):
         f = Facility.objects.get(pk = p.facility_id)
     return f
 
-def getreport(request, type, facility):
+def getreport(request, type):
     p = Person.objects.get(pk = request.session['personpk'])
     if p.role_id == 1:
-        f = Facility.objects.get(pk = facility)
+        f = Facility.objects.get(pk = request.session['inputid'])
     else:
         f = Facility.objects.get(pk = p.facility_id)
     if type == 'update':
@@ -199,7 +198,7 @@ def getreport(request, type, facility):
 def update12b(request, student_id):
     student = Student.objects.get(pk = student_id)
     f = getfacility(request, student)
-    report = getreport(request, 'update', f.pk)
+    report = getreport(request, 'update')
     f.compliant = False
     form = StudentForm12B(initial={
         'fname':student.fname,
@@ -314,7 +313,7 @@ def update12b(request, student_id):
 def update12a(request, student_id):
     student = Student.objects.get(pk = student_id)
     f = getfacility(request, student)
-    rep = getreport(request, 'update', f.pk)
+    rep = getreport(request, 'update')
     form = StudentForm12A(initial={
         'fname':student.fname,
         'mname':student.mname,
