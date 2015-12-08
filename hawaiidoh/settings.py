@@ -129,8 +129,8 @@ STATICFILES_DIRS = (
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 AWS_STORAGE_BUCKET_NAME = 'hawaiidohstaticfiles'
-AWS_ACCESS_KEY_ID = 'AKIAJOIVNYAQ32GZGTLA'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = 'AKIAJWAVZRZCKLRWHGCA'
+AWS_SECRET_ACCESS_KEY = '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'
 # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
 # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
 # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
