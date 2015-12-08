@@ -31,7 +31,7 @@ SECRET_KEY = '@a(vsh)r4$kg1p3=x%c4%%@dceg=-rh^xheex*ut8hix)3rhlr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -101,7 +101,7 @@ DATABASES = {
 }
 
 
-#DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 
 
 # Internationalization
