@@ -12,6 +12,8 @@ import operator
 
 # Create your views here.
 
+
+
 @login_required
 def facility(request):
     if request.method =='POST':
