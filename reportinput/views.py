@@ -18,6 +18,45 @@ def calc_age(born):
     else:
         return 1
 
+def getfacility(request, object):
+    p = Person.objects.get(pk = request.session['personpk'])
+    if p.role_id == 1:
+        if object.facility_id is None:
+            f = Facility.objects.get(pk = p.facility_id)
+        else:
+            f = Facility.objects.get(pk = object.facility_id)
+    else:
+        f = Facility.objects.get(pk = p.facility_id)
+    return f
+
+def getreport(request, type):
+    p = Person.objects.get(pk = request.session['personpk'])
+    if p.role_id == 1:
+        f = Facility.objects.get(pk = request.session['inputid'])
+    else:
+        f = Facility.objects.get(pk = p.facility_id)
+    if type == 'update':
+        report = Report.objects.filter(facility_id = f.pk)
+        return report.last()
+    else:
+        if not f.compliant:
+            r = Report.objects.filter(facility_id=f.id).filter(complete=False)
+            if r:
+                r = r[0]
+            else:
+                r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+                r.save()
+        else:
+            r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+            r.save()
+            f.compliant = False
+            f.save()
+            students = Student.objects.filter(facility_id = r.facility_id)
+            if students:
+                for student in students:
+                    student.report.add(r)
+        return r
+
 @login_required
 def epi12a(request):
     formset = formset_factory(StudentForm12A, extra=request.session['students'])
@@ -155,48 +194,10 @@ def epi12b(request):
         formset = formset()
     return render(request, 'reportinput/epi12b.html',{'formset':formset,})
 
-def getfacility(request, object):
-    p = Person.objects.get(pk = request.session['personpk'])
-    if p.role_id == 1:
-        if object.facility_id is None:
-            f = Facility.objects.get(pk = p.facility_id)
-        else:
-            f = Facility.objects.get(pk = object.facility_id)
-    else:
-        f = Facility.objects.get(pk = p.facility_id)
-    return f
-
-def getreport(request, type):
-    p = Person.objects.get(pk = request.session['personpk'])
-    if p.role_id == 1:
-        f = Facility.objects.get(pk = request.session['inputid'])
-    else:
-        f = Facility.objects.get(pk = p.facility_id)
-    if type == 'update':
-        report = Report.objects.filter(facility_id = f.pk)
-        return report.last()
-    else:
-        if not f.compliant:
-            r = Report.objects.filter(facility_id=f.id).filter(complete=False)
-            if r:
-                r = r[0]
-            else:
-                r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
-                r.save()
-        else:
-            r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
-            r.save()
-            f.compliant = False
-            f.save()
-            students = Student.objects.filter(facility_id = r.facility_id)
-            if students:
-                for student in students:
-                    student.report.add(r)
-        return r
-
 @login_required
 def update12b(request, student_id):
     student = Student.objects.get(pk = student_id)
+    request.session['inputid'] = student.facility_id
     f = getfacility(request, student)
     report = getreport(request, 'update')
     f.compliant = False
@@ -312,6 +313,7 @@ def update12b(request, student_id):
 @login_required
 def update12a(request, student_id):
     student = Student.objects.get(pk = student_id)
+    request.session['inputid'] = student.facility_id
     f = getfacility(request, student)
     rep = getreport(request, 'update')
     form = StudentForm12A(initial={
@@ -405,7 +407,6 @@ def update12a(request, student_id):
             return HttpResponseRedirect(reverse('reportinput:complete'))
     return render(request,'reportinput/studentupdate12a.html', {'form':form, 's':student, 'f':f})
 
-
 @login_required
 def landing12a(request):
     personid = request.session['personpk']
@@ -478,4 +479,3 @@ def landing12b(request):
 @login_required
 def complete(request):
     return render(request, 'reportinput/complete.html')
-

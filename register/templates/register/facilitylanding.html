@@ -1,6 +1,5 @@
 {% extends 'login/base.html' %}
 {% block content %}
-<fieldset class="login">
     <legend style="text-align: center;">{{ f.name }}</legend>
     <table class="table table-striped">
         <thead>
@@ -86,7 +85,10 @@
                 <td><button class="btn btn-primary" type="submit" name="Rel">Religious Exemptions</button></td>
                 <td><button class="btn btn-primary" type="submit" name="Ex">Exemptions</button></td>
                 <td><button class="btn btn-primary" type="submit" name="All">All Students</button></td>
-            <tr>
+                {% if f.compliant %}
+            <td><button class="btn btn-primary" type="submit" name="Non">Change to Non-compliant</button></td>
+            {% endif %}
+        <tr>
         </tr>
     </table>
     </form>

@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import CreateFacility, CreateUser, Username, ModifyUser, FacilityFilter
 from .models import  Facility, District, Role, User, Person, Enrollment, Island
+from reportinput.models import Report
 from django.contrib.auth.models import User as uauth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -11,8 +12,6 @@ from reportviewing.views import StudentFilter
 import operator
 
 # Create your views here.
-
-
 
 @login_required
 def facility(request):
@@ -138,7 +137,8 @@ def facilitylanding(request, facility_id):
         p = Person.objects.get(pk = request.session['personpk'])
     except Person.DoesNotExist:
         p = None
-
+    if p.role_id != 1:
+        f = Facility.objects.get(pk = p.facility_id)
     if request.method == 'POST':
         request.session['inputid'] = f.pk
 
@@ -158,6 +158,15 @@ def facilitylanding(request, facility_id):
 
         if 'All' in request.POST:
             request.session['type']=4
+
+        if 'Non' in request.POST:
+            report = Report.objects.filter(facility_id = f.pk)
+            report = report.last()
+            report.complete = False
+            report.save()
+            f.compliant = False
+            f.save()
+            return HttpResponseRedirect(reverse('register:facilitylist'))
 
         return HttpResponseRedirect(reverse('reportviewing:students'))
     else:

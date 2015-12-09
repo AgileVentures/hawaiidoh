@@ -27,8 +27,6 @@ def change_user_input_status(type):
         doh.compliant = False
     doh.save()
 
-
-
 @login_required
 def removefromreport(request, student_id):
     student = Student.objects.get(pk = student_id)
@@ -60,6 +58,7 @@ def reportsbydate(request):
             change_user_input_status('disable')
         else:
             change_user_input_status('enable')
+        return HttpResponseRedirect(reverse('login:landingpage'))
     return render(request,'reportviewing/reportsbydate.html',{'reports':r, 'facility':f})
 
 @login_required
