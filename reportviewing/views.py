@@ -60,6 +60,7 @@ def reportsbydate(request):
             change_user_input_status('disable')
         else:
             change_user_input_status('enable')
+        return HttpResponseRedirect(reverse('login:landingpage'))
     return render(request,'reportviewing/reportsbydate.html',{'reports':r, 'facility':f})
 
 @login_required
