@@ -3,7 +3,7 @@ from django import forms
 from register.models import User, Person
 from django.forms import PasswordInput
 class Login(forms.Form):
-    username = forms.CharField(max_length=255)
+    username = forms.CharField(max_length=255, label='Email Address')
     password = forms.CharField(widget=PasswordInput(), max_length=50)
 
     class Meta:

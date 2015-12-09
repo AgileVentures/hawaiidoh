@@ -139,6 +139,7 @@ def facilitylanding(request, facility_id):
         p = None
     if p.role_id != 1:
         f = Facility.objects.get(pk = p.facility_id)
+        d = District.objects.get(pk = f.district_id)
     if request.method == 'POST':
         request.session['inputid'] = f.pk
 
