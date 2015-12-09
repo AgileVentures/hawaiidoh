@@ -20,6 +20,20 @@ If you are not familiar with git and github follow these instructions:
 To run the program locally, go into the parent directory (depthealth) and ensure
 you have a python cli environment installed properly.
 
+The following libraries need to be installed as well:
+boto
+dj-storages
+dj_database_url
+dj_static
+
+Depending on OS, the easiest way is either:
+
+sudo pip install <package_name>
+or
+sudo easy_install <package_name>
+
+(for Windows users, PATH changes need to be made)
+
 From the parent directory, write the following commands in command prompt or terminal:
 
 python manage.py makemigrations
