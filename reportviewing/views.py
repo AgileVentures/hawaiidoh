@@ -27,8 +27,6 @@ def change_user_input_status(type):
         doh.compliant = False
     doh.save()
 
-
-
 @login_required
 def removefromreport(request, student_id):
     student = Student.objects.get(pk = student_id)

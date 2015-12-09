@@ -137,7 +137,8 @@ def facilitylanding(request, facility_id):
         p = Person.objects.get(pk = request.session['personpk'])
     except Person.DoesNotExist:
         p = None
-
+    if p.role_id != 1:
+        f = Facility.objects.get(pk = p.facility_id)
     if request.method == 'POST':
         request.session['inputid'] = f.pk
 
