@@ -15,10 +15,14 @@
         </tr>
         {% for student in students %}
             <tr>
+                {% if not report.complete %}
                 {% if student.enrollment_id > 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12b'  student.id%}">{{ student }}</a></td>
+                    <td style="text-align: center"><a href="{% url 'reportinput:update12b'  student.student_id%}">{{ student.student }}</a></td>
                 {% elif student.enrollment_id == 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12a' student.id %}">{{ student }}</a></td>
+                    <td style="text-align: center"><a href="{% url 'reportinput:update12a' student.student_id %}">{{ student.student }}</a></td>
+                {% endif %}
+                {% else %}
+                <td style="text-align: center">{{ student.student }}</td>
                 {% endif %}
 
                 <td style="text-align: center">

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import Student, Report
+from .models import Student, Report, PastReport
 from register.models import Person, Facility, Enrollment
 from .forms import StudentForm12A, StudentForm12B, SchoolInfo, PreKInfo
 import datetime
@@ -17,6 +17,40 @@ def calc_age(born):
         return age
     else:
         return 1
+
+def update_past_report(studentpk, reportpk):
+    student = Student.objects.get(pk = studentpk)
+    report = Report.objects.get(pk = reportpk)
+    enrollment = Enrollment.objects.get(pk = student.enrollment_id)
+    facility = Facility.objects.get(pk = student.facility_id)
+    pr = PastReport.objects.get_or_create(student_id = student.pk, report_id = report.pk)
+    pr = pr[0]
+    pr.enrollment_id = enrollment.pk
+    pr.notes = student.notes
+    pr.noshotrecord = student.noshotrecord
+    pr.exempt_rel = student.exempt_rel
+    pr.exempt_med = student.exempt_med
+    pr.dtap1 = student.dtap1
+    pr.dtap2 = student.dtap2
+    pr.dtap3 = student.dtap3
+    pr.dtap4 = student.dtap4
+    pr.dtap5 = student.dtap5
+    pr.polio1 = student.polio1
+    pr.polio2 = student.polio2
+    pr.polio3 = student.polio3
+    pr.polio4 = student.polio4
+    pr.hib = student.hib
+    pr.hepb1 = student.hepb1
+    pr.hepb2 = student.hepb2
+    pr.hepb3 = student.hepb3
+    pr.mmr1 = student.mmr1
+    pr.mmr2 = student.mmr2
+    pr.varicella1 = student.varicella1
+    pr.varicella2 = student.varicella2
+    pr.pe = student.pe
+    pr.tb = student.tb
+    pr.facility_id = facility.pk
+    pr.save()
 
 def getfacility(request, object):
     p = Person.objects.get(pk = request.session['personpk'])
@@ -54,6 +88,7 @@ def getreport(request, type):
             students = Student.objects.filter(facility_id = r.facility_id)
             if students:
                 for student in students:
+                    update_past_report(student.id, r.id)
                     student.report.add(r)
         return r
 
@@ -114,6 +149,7 @@ def epi12a(request):
                     s.hepb3 = s.hepb2
                 s.save()
                 s.report.add(r)
+                update_past_report(s.id, r.id)
         return HttpResponseRedirect(reverse('reportinput:complete'))
     else:
         formset = formset()
@@ -188,6 +224,7 @@ def epi12b(request):
                     s.varicella2 = s.varicella1
                 s.save()
                 s.report.add(r)
+                update_past_report(s.id, r.id)
         return HttpResponseRedirect(reverse('reportinput:complete'))
 
     else:
@@ -307,6 +344,7 @@ def update12b(request, student_id):
             if report is not None:
                 report.save()
                 report.student_set.add(s)
+            update_past_report(s.id, report.id)
             return HttpResponseRedirect(reverse('reportinput:complete'))
     return render(request,'reportinput/studentupdate12b.html', {'form':form,'f':f})
 
@@ -404,6 +442,7 @@ def update12a(request, student_id):
             s.save()
             rep.save()
             rep.student_set.add(s)
+            update_past_report(s.id, rep.id)
             return HttpResponseRedirect(reverse('reportinput:complete'))
     return render(request,'reportinput/studentupdate12a.html', {'form':form, 's':student, 'f':f})
 
