@@ -3,9 +3,11 @@ from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from .models import Student, Report
+from .models import Student, Report, PastReport
 from register.models import Person, Facility, Enrollment
 from .forms import StudentForm12A, StudentForm12B, SchoolInfo, PreKInfo
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from register.forms import FacilityFilter
 import datetime
 # Create your views here.
 
@@ -17,6 +19,40 @@ def calc_age(born):
         return age
     else:
         return 1
+
+def update_past_report(studentpk, reportpk):
+    student = Student.objects.get(pk = studentpk)
+    report = Report.objects.get(pk = reportpk)
+    enrollment = Enrollment.objects.get(pk = student.enrollment_id)
+    facility = Facility.objects.get(pk = student.facility_id)
+    pr = PastReport.objects.get_or_create(student_id = student.pk, report_id = report.pk)
+    pr = pr[0]
+    pr.enrollment_id = enrollment.pk
+    pr.notes = student.notes
+    pr.noshotrecord = student.noshotrecord
+    pr.exempt_rel = student.exempt_rel
+    pr.exempt_med = student.exempt_med
+    pr.dtap1 = student.dtap1
+    pr.dtap2 = student.dtap2
+    pr.dtap3 = student.dtap3
+    pr.dtap4 = student.dtap4
+    pr.dtap5 = student.dtap5
+    pr.polio1 = student.polio1
+    pr.polio2 = student.polio2
+    pr.polio3 = student.polio3
+    pr.polio4 = student.polio4
+    pr.hib = student.hib
+    pr.hepb1 = student.hepb1
+    pr.hepb2 = student.hepb2
+    pr.hepb3 = student.hepb3
+    pr.mmr1 = student.mmr1
+    pr.mmr2 = student.mmr2
+    pr.varicella1 = student.varicella1
+    pr.varicella2 = student.varicella2
+    pr.pe = student.pe
+    pr.tb = student.tb
+    pr.facility_id = facility.pk
+    pr.save()
 
 def getfacility(request, object):
     p = Person.objects.get(pk = request.session['personpk'])
@@ -37,23 +73,35 @@ def getreport(request, type):
         f = Facility.objects.get(pk = p.facility_id)
     if type == 'update':
         report = Report.objects.filter(facility_id = f.pk)
-        return report.last()
+        if report:
+            return report.last()
+        else:
+            report = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
+            report.save()
+            students = Student.objects.filter(facility_id = report.facility_id)
+            if students:
+                for student in students:
+                    update_past_report(student.id, report.id)
+                    student.report.add(report)
+            return report
+
     else:
         if not f.compliant:
             r = Report.objects.filter(facility_id=f.id).filter(complete=False)
             if r:
                 r = r[0]
             else:
-                r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+                r = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
                 r.save()
         else:
-            r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+            r = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
             r.save()
             f.compliant = False
             f.save()
             students = Student.objects.filter(facility_id = r.facility_id)
             if students:
                 for student in students:
+                    update_past_report(student.id, r.id)
                     student.report.add(r)
         return r
 
@@ -114,6 +162,7 @@ def epi12a(request):
                     s.hepb3 = s.hepb2
                 s.save()
                 s.report.add(r)
+                update_past_report(s.id, r.id)
         return HttpResponseRedirect(reverse('reportinput:complete'))
     else:
         formset = formset()
@@ -188,6 +237,7 @@ def epi12b(request):
                     s.varicella2 = s.varicella1
                 s.save()
                 s.report.add(r)
+                update_past_report(s.id, r.id)
         return HttpResponseRedirect(reverse('reportinput:complete'))
 
     else:
@@ -200,7 +250,10 @@ def update12b(request, student_id):
     request.session['inputid'] = student.facility_id
     f = getfacility(request, student)
     report = getreport(request, 'update')
+    report.complete = False
+    report.save()
     f.compliant = False
+    f.save()
     form = StudentForm12B(initial={
         'fname':student.fname,
         'mname':student.mname,
@@ -307,6 +360,7 @@ def update12b(request, student_id):
             if report is not None:
                 report.save()
                 report.student_set.add(s)
+            update_past_report(s.id, report.id)
             return HttpResponseRedirect(reverse('reportinput:complete'))
     return render(request,'reportinput/studentupdate12b.html', {'form':form,'f':f})
 
@@ -404,6 +458,7 @@ def update12a(request, student_id):
             s.save()
             rep.save()
             rep.student_set.add(s)
+            update_past_report(s.id, rep.id)
             return HttpResponseRedirect(reverse('reportinput:complete'))
     return render(request,'reportinput/studentupdate12a.html', {'form':form, 's':student, 'f':f})
 
@@ -479,3 +534,55 @@ def landing12b(request):
 @login_required
 def complete(request):
     return render(request, 'reportinput/complete.html')
+
+def student_detail_view(request, student_id):
+    student = Student.objects.get(pk = student_id)
+    p = Person.objects.get(pk = request.session['personpk'])
+    if request.method == 'POST':
+        if 'change' in request.POST:
+            request.session['changefilter'] = 'all'
+            request.session['changeid'] = student.pk
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+        if 'update12a' in request.POST:
+            return HttpResponseRedirect(reverse('reportinput:update12a', args=[student.id]))
+        if 'update12b' in request.POST:
+            return HttpResponseRedirect(reverse('reportinput:update12b', args=[student.id]))
+        if 'drop' in request.POST:
+            student.facility_id = None
+            student.save()
+            return HttpResponseRedirect(reverse('login:landingpage'))
+    return render(request, 'reportinput/studentdetail.html',{'student':student, 'p':p})
+
+def change_facility(request):
+    form = FacilityFilter()
+    if request.session['changefilter'] == 'all':
+        facilities = Facility.objects.all().order_by('name')
+    else:
+        facilities = Facility.objects.filter(name__icontains=request.session['changefilter']).order_by('name')
+    paginator = Paginator(facilities, 10)
+    page = request.GET.get('page')
+    try:
+        fac = paginator.page(page)
+    except PageNotAnInteger:
+        fac = paginator.page(1)
+    except EmptyPage:
+        fac = paginator.page(paginator.num_pages)
+    if request.method == 'POST':
+        form = FacilityFilter(request.POST)
+        if form.is_valid():
+            request.session['changefilter'] = form.cleaned_data['name']
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+    return render(request, 'reportinput/changefacility.html', {'form':form, 'facilities':fac})
+
+def confirm_change(request, facility_id):
+    facility = Facility.objects.get(pk = facility_id)
+    student = Student.objects.get(pk = request.session['changeid'])
+    if request.method == 'POST':
+        if 'confirm' in request.POST:
+            student.facility_id = facility.pk
+            student.save()
+            return HttpResponseRedirect(reverse('login:landingpage'))
+        else:
+            request.session['changefilter'] = 'all'
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+    return render(request, 'reportinput/confirmchange.html', {'facility':facility, 'student':student})

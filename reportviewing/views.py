@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from register.models import Facility, Person, Enrollment, Island, District
-from reportinput.models import Student, Report
+from reportinput.models import Student, Report, PastReport
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django import forms
@@ -58,13 +58,19 @@ def reportsbydate(request):
             change_user_input_status('disable')
         else:
             change_user_input_status('enable')
+
+        if 'delete' in request.POST:
+            reports = Report.objects.all()
+            for report in reports:
+                report.delete()
+
         return HttpResponseRedirect(reverse('login:landingpage'))
     return render(request,'reportviewing/reportsbydate.html',{'reports':r, 'facility':f})
 
 @login_required
 def schoolreport(request, report_id):
     r = Report.objects.get(pk = report_id)
-    s = Student.objects.filter(report__id=r.pk)
+    s = PastReport.objects.filter(report__id=r.pk)
     p = Person.objects.get(pk = request.session['personpk'])
     f = Facility.objects.get(pk = p.facility_id)
     if s:
@@ -87,7 +93,7 @@ def schoolreport(request, report_id):
 @login_required
 def createschoolcsva(request, report_id):
     r = Report.objects.get(pk = report_id)
-    students = Student.objects.filter(report__id=r.pk)
+    students = PastReport.objects.filter(report__id=r.pk)
     f = Facility.objects.get(pk = r.facility_id)
 
     response = HttpResponse(content_type='text/csv')
@@ -97,7 +103,7 @@ def createschoolcsva(request, report_id):
     writer.writerow([f.name,
                      'Report ID:',
                      r.id,
-                     datetime.datetime.today()])
+                     str(r.entrydate)])
     writer.writerow(['Student ID',
                      'Name',
                      'Date of Birth',
@@ -122,15 +128,16 @@ def createschoolcsva(request, report_id):
                      'TB',
                      'Notes'])
     for student in students:
+        s = Student.objects.get(pk = student.student_id)
         name = ''
-        if student.mname == '':
-            name = '{} {}'.format(student.fname, student.lname)
+        if s.mname == '':
+            name = '{} {}'.format(s.fname, s.lname)
         else:
-            name = '{} {} {}'.format(student.fname, student.mname, student.lname)
-        writer.writerow([student.id,
+            name = '{} {} {}'.format(s.fname, s.mname, s.lname)
+        writer.writerow([s.id,
                          name,
-                         student.dateofbirth,
-                         student.age,
+                         s.dateofbirth,
+                         s.age,
                          student.noshotrecord,
                          student.exempt_med,
                          student.exempt_rel,
@@ -157,7 +164,7 @@ def createschoolcsva(request, report_id):
 @login_required
 def createschoolcsvb(request, report_id):
     r = Report.objects.get(pk = report_id)
-    students = Student.objects.filter(report__id=r.pk)
+    students = PastReport.objects.filter(report__id=r.pk)
     f = Facility.objects.get(pk = r.facility_id)
 
     students = students.exclude(enrollment_id = 1)
@@ -169,7 +176,7 @@ def createschoolcsvb(request, report_id):
     writer.writerow([f.name,
                      'Report ID:',
                      r.id,
-                     datetime.datetime.today()])
+                     str(r.entrydate)])
     writer.writerow(['Student ID',
                      'Name',
                      'Date of Birth',
@@ -197,14 +204,15 @@ def createschoolcsvb(request, report_id):
                      'TB',
                      'Notes'])
     for student in students:
+        s = Student.objects.get(pk = student.student_id)
         name = ''
-        if student.mname == '':
-            name = '{} {}'.format(student.fname, student.lname)
+        if s.mname == '':
+            name = '{} {}'.format(s.fname, s.lname)
         else:
-            name = '{} {} {}'.format(student.fname, student.mname, student.lname)
-        writer.writerow([student.id,
+            name = '{} {} {}'.format(s.fname, s.mname, s.lname)
+        writer.writerow([s.id,
                          name,
-                         student.dateofbirth,
+                         s.dateofbirth,
                          student.enrollment,
                          student.noshotrecord,
                          student.exempt_med,

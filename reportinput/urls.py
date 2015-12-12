@@ -9,5 +9,8 @@ urlpatterns = [
     url(r'landing12b', views.landing12b, name='landing12b'),
     url(r'complete', views.complete, name='complete'),
     url(r'^(?P<student_id>[0-9]+)/update12a', views.update12a, name='update12a'),
-    url(r'^(?P<student_id>[0-9]+)/update12b', views.update12b, name='update12b')
+    url(r'^(?P<student_id>[0-9]+)/update12b', views.update12b, name='update12b'),
+    url(r'^(?P<student_id>[0-9]+)/studentdetail', views.student_detail_view, name='studentdetail'),
+    url(r'changefacility', views.change_facility, name='changefacility'),
+    url(r'^(?P<facility_id>[0-9]+)/confirmchange', views.confirm_change, name='confirmchange')
 ]

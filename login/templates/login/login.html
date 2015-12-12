@@ -11,7 +11,7 @@
     <legend class="login">Login</legend>
     <form action = "/login/" method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form.as_p}}
         <input type="submit" value="Submit" class="btn btn-primary">
     </form>
 </fieldset>

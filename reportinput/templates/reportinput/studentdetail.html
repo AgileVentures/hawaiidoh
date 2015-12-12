@@ -1,42 +1,18 @@
 {% extends 'login/base.html' %}
 {% block content %}
-<h3>School Reports</h3>
-    {% if students %}
-        <form action="" method="post">
-    {% csrf_token %}
-    <table class="table table-striped">
-        <tr>
-            <th style="text-align: center">Name</th>
-            <th style="text-align: center">Exemptions</th>
-            <th style="text-align: center">Missing Vaccines</th>
-            {% if not report.complete %}
-                <th style="text-align: center">Remove Student From Report</th>
-            {% endif %}
-        </tr>
-        {% for student in students %}
-            <tr>
-                {% if not report.complete %}
-                {% if student.enrollment_id > 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12b'  student.student_id%}">{{ student.student }}</a></td>
-                {% elif student.enrollment_id == 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12a' student.student_id %}">{{ student.student }}</a></td>
-                {% endif %}
-                {% else %}
-                <td style="text-align: center">{{ student.student }}</td>
-                {% endif %}
 
-                <td style="text-align: center">
-                    {% if student.exempt_med and student.exempt_rel %}
-                        Medical and Religious
-                    {% elif student.exempt_med %}
-                        Medical
-                    {% elif student.exempt_rel %}
-                        Religious
-                    {% else %}
-                        None
-                    {% endif %}
-                </td>
-                <td style="text-align: center">
+    <h1 style="text-align: center">{{ student }}</h1>
+    <h2 style="text-align: center">ID: {{ student.id }}</h2>
+    <h3 style="text-align: center">Date of Birth: {{ student.dateofbirth }}</h3>
+
+<table class="table table-striped">
+    <thead>
+    <th style="text-align: center">Facility</th>
+    <th style="text-align: center">Missing Vaccines</th>
+    </thead>
+    <tbody>
+    <td style="text-align: center">{{ student.facility }}</td>
+    <td style="text-align: center">
                     {% if student.enrollment_id > 1 %}
                         {% if student.dtap1 %}
                             DTaP/DTP/DT/Td 1-5
@@ -122,19 +98,22 @@
                         {% endif %}
                     {% endif %}
                 </td>
-                {% if not report.complete %}
-                    <td style="text-align: center"><a href="{% url 'reportviewing:removefromreport' student.id %}">Remove</a></td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-        </table>
-        <br />
-    <input type="submit" value="Create CSV" class="btn btn-info">
-        {% if facility.canupdate and not report.complete %}
-    <input type="submit" value="Confirm" class="btn btn-info" name="confirm">
-            {% endif %}
-    </form>
-    {% else %}
-        <p>No Students In This Report</p>
+    </tbody>
+</table>
+<form action="" method="post">
+    {% csrf_token %}
+<ul class="pager">
+    {% if p.role_id == 1 %}
+    <li><button class="btn btn-primary" type="submit" name="change">Change Facility</button></li>
+    |
     {% endif %}
+    {% if student.enrollment_id == 1%}
+    <li><button class="btn btn-primary" type="submit" name="update12a">Update Vaccines</button></li>
+    {% else %}
+    <li><button class="btn btn-primary" type="submit" name="update12b">Update Vaccines</button></li>
+    {% endif %}
+    |
+    <li><button class="btn btn-primary" type="submit" name="drop">Remove From Facility</button></li>
+</ul>
+    </form>
 {% endblock %}
