@@ -29,9 +29,9 @@
         {% for student in students %}
         <tr>
             {% if student.enrollment_id > 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12b'  student.id%}">{{ student }}</a></td>
+                    <td style="text-align: center"><a href="{% url 'reportinput:studentdetail'  student.id%}">{{ student }}</a></td>
             {% elif student.enrollment_id == 1 %}
-                    <td style="text-align: center"><a href="{% url 'reportinput:update12a' student.id %}">{{ student }}</a></td>
+                    <td style="text-align: center"><a href="{% url 'reportinput:studentdetail' student.id %}">{{ student }}</a></td>
             {% endif %}
             {% if request.session.role == 1 %}
             <td style="text-align: center">{{ student.facility }}</td>

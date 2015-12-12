@@ -1,0 +1,119 @@
+{% extends 'login/base.html' %}
+{% block content %}
+
+    <h1 style="text-align: center">{{ student }}</h1>
+    <h2 style="text-align: center">ID: {{ student.id }}</h2>
+    <h3 style="text-align: center">Date of Birth: {{ student.dateofbirth }}</h3>
+
+<table class="table table-striped">
+    <thead>
+    <th style="text-align: center">Facility</th>
+    <th style="text-align: center">Missing Vaccines</th>
+    </thead>
+    <tbody>
+    <td style="text-align: center">{{ student.facility }}</td>
+    <td style="text-align: center">
+                    {% if student.enrollment_id > 1 %}
+                        {% if student.dtap1 %}
+                            DTaP/DTP/DT/Td 1-5
+                        {% elif student.dtap2 %}
+                            DTaP/DTP/DT/Td 2-5
+                        {% elif student.dtap3 %}
+                            DTaP/DTP/DT/Td 3-5
+                        {% elif student.dtap4 %}
+                            DTaP/DTP/DT/Td 4-5
+                        {% elif student.dtap5 %}
+                            DTaP/DTP/DT/Td 5
+                        {% endif %}
+                        {% if student.polio1 %}
+                            Polio 1-4
+                        {% elif student.polio2 %}
+                            Polio 2-4
+                        {% elif student.polio3 %}
+                            Polio 3-4
+                        {% elif student.polio4 %}
+                            Polio 4
+                        {% endif %}
+                        {% if student.hepb1 %}
+                            HepB 1-3
+                        {% elif student.hepb2 %}
+                            HepB 2-3
+                        {% elif student.hepb3 %}
+                            HepB 3
+                        {% endif %}
+                        {% if student.mmr1 %}
+                            MMR 1-2
+                        {% elif student.mmr2 %}
+                            MMR 2
+                        {% endif %}
+                        {% if student.varicella1 %}
+                            Varicella 1-2
+                        {% elif student.varicella2 %}
+                            Varicella 2
+                        {% endif %}
+                        {% if student.pe %}
+                            PE
+                        {% endif %}
+                        {% if student.tb %}
+                            TB
+                        {% endif %}
+                    {% elif student.enrollment_id == 1 %}
+                        {% if student.dtap1 %}
+                            DTaP/DTP/DT 1-4
+                        {% elif student.dtap2 %}
+                            DTaP/DTP/DT 2-4
+                        {% elif student.dtap3 %}
+                            DTaP/DTP/DT 3-4
+                        {% elif student.dtap4 %}
+                            DTaP/DTP/DT 4
+                        {% endif %}
+                        {% if student.polio1 %}
+                            Polio 1-3
+                        {% elif student.polio2 %}
+                            Polio 2-3
+                        {% elif student.polio3 %}
+                            Polio 3
+                        {% endif %}
+                        {% if student.hib %}
+                            Hib
+                        {% endif %}
+                        {% if student.hepb1 %}
+                            HepB 1-3
+                        {% elif student.hepb2 %}
+                            HepB 2-3
+                        {% elif student.hepb3 %}
+                            HepB 3
+                        {% endif %}
+                        {% if student.mmr1 %}
+                            MMR 1
+                        {% endif %}
+                        {% if student.varicella1 %}
+                            Varicella 1
+                        {% endif %}
+                        {% if student.pe %}
+                            PE
+                        {% endif %}
+                        {% if student.tb %}
+                            TB
+                        {% endif %}
+                    {% endif %}
+                </td>
+    </tbody>
+</table>
+<form action="" method="post">
+    {% csrf_token %}
+<ul class="pager">
+    {% if p.role_id == 1 %}
+    <li><button class="btn btn-primary" type="submit" name="change">Change Facility</button></li>
+    |
+    {% endif %}
+    {% if student.enrollment_id == 1%}
+    <li><button class="btn btn-primary" type="submit" name="update12a">Update Vaccines</button></li>
+    {% else %}
+    <li><button class="btn btn-primary" type="submit" name="update12b">Update Vaccines</button></li>
+    {% endif %}
+    |
+    <li><button class="btn btn-primary" type="submit" name="drop">Remove From Facility</button></li>
+</ul>
+    </form>
+{% endblock %}

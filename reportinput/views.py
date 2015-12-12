@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from .models import Student, Report, PastReport
 from register.models import Person, Facility, Enrollment
 from .forms import StudentForm12A, StudentForm12B, SchoolInfo, PreKInfo
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from register.forms import FacilityFilter
 import datetime
 # Create your views here.
 
@@ -71,17 +73,28 @@ def getreport(request, type):
         f = Facility.objects.get(pk = p.facility_id)
     if type == 'update':
         report = Report.objects.filter(facility_id = f.pk)
-        return report.last()
+        if report:
+            return report.last()
+        else:
+            report = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
+            report.save()
+            students = Student.objects.filter(facility_id = report.facility_id)
+            if students:
+                for student in students:
+                    update_past_report(student.id, report.id)
+                    student.report.add(report)
+            return report
+
     else:
         if not f.compliant:
             r = Report.objects.filter(facility_id=f.id).filter(complete=False)
             if r:
                 r = r[0]
             else:
-                r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+                r = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
                 r.save()
         else:
-            r = Report(person_id=p.pk, facility_id=p.facility_id,entrydate=datetime.datetime.today())
+            r = Report(person_id=p.pk, facility_id=f.pk,entrydate=datetime.datetime.today())
             r.save()
             f.compliant = False
             f.save()
@@ -237,7 +250,10 @@ def update12b(request, student_id):
     request.session['inputid'] = student.facility_id
     f = getfacility(request, student)
     report = getreport(request, 'update')
+    report.complete = False
+    report.save()
     f.compliant = False
+    f.save()
     form = StudentForm12B(initial={
         'fname':student.fname,
         'mname':student.mname,
@@ -518,3 +534,55 @@ def landing12b(request):
 @login_required
 def complete(request):
     return render(request, 'reportinput/complete.html')
+
+def student_detail_view(request, student_id):
+    student = Student.objects.get(pk = student_id)
+    p = Person.objects.get(pk = request.session['personpk'])
+    if request.method == 'POST':
+        if 'change' in request.POST:
+            request.session['changefilter'] = 'all'
+            request.session['changeid'] = student.pk
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+        if 'update12a' in request.POST:
+            return HttpResponseRedirect(reverse('reportinput:update12a', args=[student.id]))
+        if 'update12b' in request.POST:
+            return HttpResponseRedirect(reverse('reportinput:update12b', args=[student.id]))
+        if 'drop' in request.POST:
+            student.facility_id = None
+            student.save()
+            return HttpResponseRedirect(reverse('login:landingpage'))
+    return render(request, 'reportinput/studentdetail.html',{'student':student, 'p':p})
+
+def change_facility(request):
+    form = FacilityFilter()
+    if request.session['changefilter'] == 'all':
+        facilities = Facility.objects.all().order_by('name')
+    else:
+        facilities = Facility.objects.filter(name__icontains=request.session['changefilter']).order_by('name')
+    paginator = Paginator(facilities, 10)
+    page = request.GET.get('page')
+    try:
+        fac = paginator.page(page)
+    except PageNotAnInteger:
+        fac = paginator.page(1)
+    except EmptyPage:
+        fac = paginator.page(paginator.num_pages)
+    if request.method == 'POST':
+        form = FacilityFilter(request.POST)
+        if form.is_valid():
+            request.session['changefilter'] = form.cleaned_data['name']
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+    return render(request, 'reportinput/changefacility.html', {'form':form, 'facilities':fac})
+
+def confirm_change(request, facility_id):
+    facility = Facility.objects.get(pk = facility_id)
+    student = Student.objects.get(pk = request.session['changeid'])
+    if request.method == 'POST':
+        if 'confirm' in request.POST:
+            student.facility_id = facility.pk
+            student.save()
+            return HttpResponseRedirect(reverse('login:landingpage'))
+        else:
+            request.session['changefilter'] = 'all'
+            return HttpResponseRedirect(reverse('reportinput:changefacility'))
+    return render(request, 'reportinput/confirmchange.html', {'facility':facility, 'student':student})

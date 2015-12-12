@@ -1,0 +1,15 @@
+{% extends 'login/base.html' %}
+{% block content %}
+    <h2 style="text-align: center">Confirm that you want to change student:</h2>
+    <h1 style="text-align: center; color: green">{{ student }}</h1>
+    <h2 style="text-align: center">To the following facility:</h2>
+    <h1 style="text-align: center; color: forestgreen">{{ facility }}</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    <ul class="pager">
+        <li><button class="btn btn-primary" type="submit" name="confirm">Confirm</button></li>
+        |
+        <li><button class="btn btn-primary" type="submit" name="goback">Go Back</button></li>
+    </ul>
+</form>
+{% endblock %}
