@@ -59,10 +59,10 @@ def reportsbydate(request):
         else:
             change_user_input_status('enable')
 
-        #if 'delete' in request.POST:
-        #    reports = Report.objects.all()
-        #    for report in reports:
-        #        report.delete()
+        if 'delete' in request.POST:
+            reports = Report.objects.all()
+            for report in reports:
+                report.delete()
 
         return HttpResponseRedirect(reverse('login:landingpage'))
     return render(request,'reportviewing/reportsbydate.html',{'reports':r, 'facility':f})
