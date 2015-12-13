@@ -508,6 +508,8 @@ def landing12b(request):
             other_enroll = form.cleaned_data['other_enroll']
             students = form.cleaned_data['students_to_input']
             seventh_grade_enroll = form.cleaned_data['seventh_grade_enroll']
+            if other_enroll < 0:
+                return HttpResponseRedirect(reverse('reportinput:landing12b'))
             f.seventh_grade_enroll = seventh_grade_enroll
             f.lowest_grade_id = lowest_grade.pk
             f.highest_grade_id = highest_grade.pk
