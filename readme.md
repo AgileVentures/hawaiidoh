@@ -57,6 +57,8 @@ Note: During development, the settings.py file will be changed quite often. When
 
 Also, the following line needs to be commented out
 
+```
 DATABASES['default'] = dj_database_url.config()
+```
 
 Remember to uncomment if you make a Heroku instance and change DEBUG back to false.
