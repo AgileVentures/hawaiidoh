@@ -476,7 +476,7 @@ def landing12a(request):
             f.under_19_months = form.cleaned_data['under19']
             f.over_19_months = form.cleaned_data['over19']
             f.total_prek = form.cleaned_data['under19'] + form.cleaned_data['over19']
-            if form.claned_data['under19'] < 0 or form.cleaned_data['over19'] < 0:
+            if form.cleaned_data['under19'] < 0 or form.cleaned_data['over19'] < 0:
                 return HttpResponseRedirect(reverse('reportinput:landing12a'))
             if form.cleaned_data['students'] == 0:
                 if f.is_only_pre_k:

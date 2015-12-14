@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="221f1344-41bc-4ebf-ab61-85e48c09b17b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hawaiidoh/settings.py" afterPath="$PROJECT_DIR$/hawaiidoh/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reportinput/views.py" afterPath="$PROJECT_DIR$/reportinput/views.py" />
     </list>
     <ignored path="hawaiidoh.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,26 +25,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reportviewing/views.py">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reportinput/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+              <caret line="65" column="47" selection-start-line="65" selection-start-column="47" selection-end-line="65" selection-end-column="47" />
               <folding>
-                <element signature="e#602#973#0" expanded="false" />
-                <element signature="e#1038#1505#0" expanded="false" />
-                <element signature="e#1555#2624#0" expanded="false" />
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#1899#2302#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="reportsbydate.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reportviewing/templates/reportviewing/reportsbydate.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="99" selection-start-line="10" selection-start-column="99" selection-end-line="10" selection-end-column="99" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -53,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/reportinput/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="463" column="0" selection-start-line="463" selection-start-column="0" selection-end-line="463" selection-end-column="0" />
+              <caret line="478" column="83" selection-start-line="478" selection-start-column="83" selection-end-line="478" selection-end-column="83" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
                 <element signature="e#599#777#0" expanded="false" />
@@ -64,11 +53,11 @@
                 <element signature="e#6630#9830#0" expanded="false" />
                 <element signature="e#9888#14307#0" expanded="false" />
                 <element signature="e#14365#18088#0" expanded="false" />
-                <element signature="e#19564#21952#0" expanded="false" />
-                <element signature="e#21997#22048#0" expanded="false" />
-                <element signature="e#22100#22986#0" expanded="false" />
-                <element signature="e#23022#23881#0" expanded="false" />
-                <element signature="e#23929#24508#0" expanded="false" />
+                <element signature="e#19565#21953#0" expanded="false" />
+                <element signature="e#21998#22049#0" expanded="false" />
+                <element signature="e#22101#22987#0" expanded="false" />
+                <element signature="e#23023#23882#0" expanded="false" />
+                <element signature="e#23930#24509#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -78,43 +67,8 @@
         <entry file="file://$PROJECT_DIR$/hawaiidoh/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.27488688">
-              <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+              <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reportviewing/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reportinput/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="94" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
-              <folding>
-                <element signature="e#0#51#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reportinput/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="65" column="47" selection-start-line="65" selection-start-column="47" selection-end-line="65" selection-end-column="47" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#1899#2302#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -563,11 +517,11 @@
             <element signature="e#6630#9830#0" expanded="false" />
             <element signature="e#9888#14307#0" expanded="false" />
             <element signature="e#14365#18088#0" expanded="false" />
-            <element signature="e#19564#21952#0" expanded="false" />
-            <element signature="e#21997#22048#0" expanded="false" />
-            <element signature="e#22100#22986#0" expanded="false" />
-            <element signature="e#23022#23881#0" expanded="false" />
-            <element signature="e#23929#24508#0" expanded="false" />
+            <element signature="e#19565#21953#0" expanded="false" />
+            <element signature="e#21998#22049#0" expanded="false" />
+            <element signature="e#22101#22987#0" expanded="false" />
+            <element signature="e#23023#23882#0" expanded="false" />
+            <element signature="e#23930#24509#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -597,6 +551,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+          <folding>
+            <element signature="e#3349#3529#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -654,11 +611,11 @@
             <element signature="e#6630#9830#0" expanded="false" />
             <element signature="e#9888#14307#0" expanded="false" />
             <element signature="e#14365#18088#0" expanded="false" />
-            <element signature="e#19564#21952#0" expanded="false" />
-            <element signature="e#21997#22048#0" expanded="false" />
-            <element signature="e#22100#22986#0" expanded="false" />
-            <element signature="e#23022#23881#0" expanded="false" />
-            <element signature="e#23929#24508#0" expanded="false" />
+            <element signature="e#19565#21953#0" expanded="false" />
+            <element signature="e#21998#22049#0" expanded="false" />
+            <element signature="e#22101#22987#0" expanded="false" />
+            <element signature="e#23023#23882#0" expanded="false" />
+            <element signature="e#23930#24509#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -735,6 +692,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="22" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -826,6 +784,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+          <folding>
+            <element signature="e#3349#3529#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -833,6 +794,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.4128959">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -878,22 +842,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reportviewing/templates/reportviewing/reportsbydate.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="99" selection-start-line="10" selection-start-column="99" selection-end-line="10" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reportviewing/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.030542986">
           <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
           <folding>
             <element signature="e#602#973#0" expanded="false" />
             <element signature="e#1038#1505#0" expanded="false" />
             <element signature="e#1555#2624#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reportviewing/templates/reportviewing/reportsbydate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2676887">
+          <caret line="10" column="99" selection-start-line="10" selection-start-column="99" selection-end-line="10" selection-end-column="99" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reportviewing/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reportinput/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4276018">
+          <caret line="14" column="94" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -909,28 +891,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reportviewing/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reportinput/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="94" selection-start-line="14" selection-start-column="94" selection-end-line="14" selection-end-column="94" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reportinput/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="463" column="0" selection-start-line="463" selection-start-column="0" selection-end-line="463" selection-end-column="0" />
+          <caret line="478" column="83" selection-start-line="478" selection-start-column="83" selection-end-line="478" selection-end-column="83" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
             <element signature="e#599#777#0" expanded="false" />
@@ -941,11 +905,11 @@
             <element signature="e#6630#9830#0" expanded="false" />
             <element signature="e#9888#14307#0" expanded="false" />
             <element signature="e#14365#18088#0" expanded="false" />
-            <element signature="e#19564#21952#0" expanded="false" />
-            <element signature="e#21997#22048#0" expanded="false" />
-            <element signature="e#22100#22986#0" expanded="false" />
-            <element signature="e#23022#23881#0" expanded="false" />
-            <element signature="e#23929#24508#0" expanded="false" />
+            <element signature="e#19565#21953#0" expanded="false" />
+            <element signature="e#21998#22049#0" expanded="false" />
+            <element signature="e#22101#22987#0" expanded="false" />
+            <element signature="e#23023#23882#0" expanded="false" />
+            <element signature="e#23930#24509#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -953,7 +917,7 @@
     <entry file="file://$PROJECT_DIR$/hawaiidoh/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27488688">
-          <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
           <folding />
         </state>
       </provider>
