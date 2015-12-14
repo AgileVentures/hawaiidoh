@@ -36,10 +36,12 @@ sudo easy_install <package_name>
 
 From the parent directory, write the following commands in command prompt or terminal:
 
+```
 python manage.py makemigrations
 python manage.py migrate
 python manage.py syncdb
 python manage.py runserver
+```
 
 If all goes well, you should have a local instance running.
 
