@@ -6,6 +6,7 @@
 	<legend class="login">Create User</legend>
     <form action="" method="post">
     {% csrf_token %}
+    <table width="50%" style="float: left">
     <div class="col-xs-6">
             <div class="form-group">
                 <label for="user">Email Address:</label>
@@ -21,10 +22,19 @@
             </div>
             <input type="submit" name="submit" value="Submit" class="btn btn-primary">
         </div>
-        <div class="col-xs-6">
-            <img src="{% static "login/measles.jpg" %}">
-        </div>
     </div>
+        </table>
+        <table width="50%" style="float: right">
+            <div class="alert alert-info" role="alert">
+		<p><strong>Passwords must follow the following rules:</strong></p>
+                <ul>
+            <li>Have at least one (1) lowercase letter</li>
+                    <li>Have at least one (1) uppercase letter</li>
+                    <li>Have at least one (1) number</li>
+                    <li>Must be between 8-20 characters long</li>
+        </ul>
+	</div>
+        </table>
     </form>
 </fieldset>
 {% endblock %}

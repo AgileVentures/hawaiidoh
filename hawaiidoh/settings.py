@@ -31,7 +31,7 @@ SECRET_KEY = '@a(vsh)r4$kg1p3=x%c4%%@dceg=-rh^xheex*ut8hix)3rhlr'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 AWS_HEADERS = {  # see http://developer.yahoo.com/performance/rules.html#expires
@@ -100,7 +100,7 @@ DATABASES = {
 }
 
 
-#DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 
 
 # Internationalization
@@ -129,7 +129,9 @@ STATICFILES_DIRS = (
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-
+AWS_STORAGE_BUCKET_NAME = 'hawaiidohstaticfiles'
+AWS_ACCESS_KEY_ID = 'AKIAJWAVZRZCKLRWHGCA'
+AWS_SECRET_ACCESS_KEY = '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'
 # Tell django-storages that when coming up with the URL for an item in S3 storage, keep
 # it simple - just use this domain plus the path. (If this isn't set, things get complicated).
 # This controls how the `static` template tag from `staticfiles` gets expanded, if you're using it.
